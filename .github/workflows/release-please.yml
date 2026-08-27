@@ -14,6 +14,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@v4
-        with:
-          # Go 项目的版本只存在于 git tag，不维护版本文件。
-          release-type: go
+        # 配置在 .release-please-config.json（release-type: go + initial-version 0.0.0）
