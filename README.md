@@ -51,7 +51,7 @@ GOPROXY=https://goproxy.cn,direct go install github.com/FlowmaxAITrade/flowmax-o
 
 ### 方式二：下载预编译二进制
 
-见仓库 Releases，选择对应平台（darwin/linux × amd64/arm64）下载解压。
+见仓库 Releases，选择对应平台（darwin/linux/windows × amd64/arm64）下载解压。Windows 为 `.zip`（内含 `.exe`），其余为 `.tar.gz`。
 
 ### 接入 Claude Code
 
@@ -93,7 +93,7 @@ OPS_BE_BASE_URL=http://127.0.0.1:8080 OPS_API_KEY=xxx go run ./cmd/flowmax-ops-m
 1. 用 **conventional commits**（`feat:` 升 minor、`fix:` 升 patch、`feat!:`/`fix!:` 升 major）提交并合入 `main`；
 2. release-please 检测到变更，自动开一个「release PR」（含版本号 bump + CHANGELOG）；
 3. 合并该 release PR → 自动打 tag（如 `v0.2.0`）并创建 GitHub Release；
-4. tag 触发 GoReleaser，构建 darwin/linux 的 amd64/arm64 二进制并上传到该 Release（`release.mode: keep-existing`，不会另建重复 release）。
+4. tag 触发 GoReleaser，构建 darwin/linux/windows 的 amd64/arm64 二进制并上传到该 Release（`release.mode: keep-existing`，不会另建重复 release）。
 
 > 提交信息务必以 `feat:` / `fix:` 开头，否则不会触发版本 bump。
 
