@@ -86,6 +86,14 @@ OPS_BE_BASE_URL=http://127.0.0.1:8080 OPS_API_KEY=xxx go run ./cmd/flowmax-ops-m
 
 规则：每次对外发布必须先打 tag，tag 采用语义化版本 `vMAJOR.MINOR.PATCH`；不手动改 `internal/version/version.go` 的默认值。
 
-## 版本发布
+## 版本发布（自动）
 
-打 `v*.*.*` tag 会触发 GitHub Actions 用 GoReleaser 构建 darwin/linux 的 amd64/arm64 二进制并发布到 Releases。
+发版由 [release-please](https://github.com/googleapis/release-please) 全自动管理，无需手动打 tag：
+
+1. 用 **conventional commits**（`feat:` 升 minor、`fix:` 升 patch、`feat!:`/`fix!:` 升 major）提交并合入 `main`；
+2. release-please 检测到变更，自动开一个「release PR」（含版本号 bump + CHANGELOG）；
+3. 合并该 release PR → 自动打 tag（如 `v0.2.0`）并创建 GitHub Release；
+4. tag 触发 GoReleaser，构建 darwin/linux 的 amd64/arm64 二进制并上传到该 Release（`release.mode: keep-existing`，不会另建重复 release）。
+
+> 提交信息务必以 `feat:` / `fix:` 开头，否则不会触发版本 bump。
+

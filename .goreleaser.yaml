@@ -25,9 +25,7 @@ archives:
 checksum:
   name_template: "checksums.txt"
 
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - "^docs:"
-      - "^test:"
+# release-please owns the release (tag + changelog); GoReleaser only uploads
+# binaries to the existing release instead of creating a duplicate one.
+release:
+  mode: keep-existing
