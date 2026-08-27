@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/compare/v0.1.0...v0.1.1) (2026-08-27)
+
+
+### Bug Fixes
+
+* review 列表工具轮询 202 calculating；HTTP 超时 30s→90s ([714a485](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/commit/714a48576e064009de8828dbb378733cac80472e))
+
 ## 0.1.0 (2026-08-27)
 
 
