@@ -75,6 +75,17 @@ go test ./...
 OPS_BE_BASE_URL=http://127.0.0.1:8080 OPS_API_KEY=xxx go run ./cmd/flowmax-ops-mcp
 ```
 
+## 版本管理
+
+版本号的**单一来源是 git tag**：打 `v*.*.*` tag 触发 GoReleaser 构建，`-ldflags -X` 把 tag、commit、构建时间注入二进制：
+
+- MCP 协议 `initialize` 握手报告的版本 = tag（如 `0.1.0`）；
+- `flowmax-ops-mcp --version` 打印完整构建身份：
+  `flowmax-ops-mcp 0.1.0 (commit=abc1234, built=2026-08-27T10:00:00Z)`；
+- 未注入 ldflags 的构建（本地 / `go install`）回退读取 Go build info，显示模块伪版本或 `dev`，并附带 commit hash（含 `+dirty` 标记，便于定位）。
+
+规则：每次对外发布必须先打 tag，tag 采用语义化版本 `vMAJOR.MINOR.PATCH`；不手动改 `internal/version/version.go` 的默认值。
+
 ## 版本发布
 
 打 `v*.*.*` tag 会触发 GitHub Actions 用 GoReleaser 构建 darwin/linux 的 amd64/arm64 二进制并发布到 Releases。

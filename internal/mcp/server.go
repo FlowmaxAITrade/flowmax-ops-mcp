@@ -7,11 +7,10 @@ import (
 	"strconv"
 
 	"github.com/FlowmaxAITrade/flowmax-ops-mcp/internal/client"
+	"github.com/FlowmaxAITrade/flowmax-ops-mcp/internal/version"
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 )
-
-const serverVersion = "0.1.0"
 
 // NewServer builds the MCP server and registers all tools. The server exposes
 // two tool families against ops-be read-only endpoints:
@@ -19,7 +18,7 @@ const serverVersion = "0.1.0"
 //	decision review  -> /api/review/*
 //	business metrics -> /api/ops/*
 func NewServer(opsBEBaseURL, opsAPIKey string) *server.MCPServer {
-	s := server.NewMCPServer("flowmax-ops-mcp", serverVersion)
+	s := server.NewMCPServer("flowmax-ops-mcp", version.Version)
 	r := &registry{client: client.NewClient(opsBEBaseURL, opsAPIKey)}
 	registerReviewTools(s, r)
 	registerOpsTools(s, r)
