@@ -13,8 +13,13 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
+      # 用 GitHub App 生成短期 token（最小权限、自动过期），代替 GITHUB_TOKEN 创建 PR
+      - uses: tibdex/github-app-token@v2
+        id: app-token
+        with:
+          app_id: ${{ secrets.RELEASE_APP_ID }}
+          private_key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
       - uses: googleapis/release-please-action@v4
         with:
-          # 用 PAT 代替 GITHUB_TOKEN，绕过 org 对「Actions 创建 PR」的限制
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
         # 配置在 .release-please-config.json（release-type: go + initial-version 0.1.0）
