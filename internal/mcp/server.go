@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/url"
 	"strconv"
+	"time"
 
 	"github.com/FlowmaxAITrade/flowmax-ops-mcp/internal/client"
 	"github.com/FlowmaxAITrade/flowmax-ops-mcp/internal/version"
@@ -36,15 +37,44 @@ func (r *registry) get(ctx context.Context, path string, query url.Values) (*mcp
 	if err != nil {
 		return mcp.NewToolResultError(err.Error()), nil
 	}
+	return r.render(data), nil
+}
+
+// getReview is like get, but cross-trader review endpoints return 202
+// "calculating" until a background snapshot is ready. It polls until the result
+// leaves "calculating" (or a timeout), so callers always see the final data.
+const maxReviewAttempts = 10
+
+// reviewPollInterval is a package var so tests can shorten it.
+var reviewPollInterval = 3 * time.Second
+
+func (r *registry) getReview(ctx context.Context, path string, query url.Values) (*mcp.CallToolResult, error) {
+	for attempt := 0; attempt < maxReviewAttempts; attempt++ {
+		data, err := r.client.Get(ctx, path, query)
+		if err != nil {
+			return mcp.NewToolResultError(err.Error()), nil
+		}
+		var status struct {
+			Status string `json:"status"`
+		}
+		if json.Unmarshal(data, &status) != nil || status.Status != "calculating" {
+			return r.render(data), nil
+		}
+		time.Sleep(reviewPollInterval)
+	}
+	return mcp.NewToolResultError("review query did not become ready within timeout"), nil
+}
+
+func (r *registry) render(data json.RawMessage) *mcp.CallToolResult {
 	var value any
 	if err := json.Unmarshal(data, &value); err != nil {
-		return mcp.NewToolResultError("decode data: " + err.Error()), nil
+		return mcp.NewToolResultError("decode data: " + err.Error())
 	}
 	pretty, err := json.MarshalIndent(value, "", "  ")
 	if err != nil {
-		return mcp.NewToolResultError("encode data: " + err.Error()), nil
+		return mcp.NewToolResultError("encode data: " + err.Error())
 	}
-	return mcp.NewToolResultText(string(pretty)), nil
+	return mcp.NewToolResultText(string(pretty))
 }
 
 func setStr(q url.Values, key, value string) {
@@ -74,7 +104,7 @@ func registerReviewTools(s *server.MCPServer, r *registry) {
 		q.Set("is_active", strconv.FormatBool(req.GetBool("is_active", true)))
 		setInt(q, "page", req.GetInt("page", 1))
 		setInt(q, "page_size", req.GetInt("page_size", 20))
-		return r.get(ctx, "/api/review/traders", q)
+		return r.getReview(ctx, "/api/review/traders", q)
 	})
 
 	s.AddTool(mcp.NewTool("search_decisions",
@@ -93,7 +123,7 @@ func registerReviewTools(s *server.MCPServer, r *registry) {
 		setStr(q, "status", req.GetString("status", ""))
 		setInt(q, "page", req.GetInt("page", 1))
 		setInt(q, "page_size", req.GetInt("page_size", 20))
-		return r.get(ctx, "/api/review/decisions", q)
+		return r.getReview(ctx, "/api/review/decisions", q)
 	})
 
 	s.AddTool(mcp.NewTool("get_round",
