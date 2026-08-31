@@ -112,7 +112,7 @@ func registerReviewTools(s *server.MCPServer, r *registry) {
 		mcp.WithString("start", mcp.Description("起始时间 RFC3339，如 2026-08-01T00:00:00Z")),
 		mcp.WithString("end", mcp.Description("结束时间 RFC3339")),
 		mcp.WithString("pm_id", mcp.Description("限定某个交易员（可选）")),
-		mcp.WithString("status", mcp.Description("状态过滤：success/degraded_success/failed/running/unknown")),
+		mcp.WithString("status", mcp.Description("状态过滤：created/skipped/execution_failed")),
 		mcp.WithNumber("page", mcp.Description("页码，默认 1")),
 		mcp.WithNumber("page_size", mcp.Description("每页条数，默认 20，最大 100")),
 	), func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -251,12 +251,16 @@ func registerOpsTools(s *server.MCPServer, r *registry) {
 		mcp.WithString("account_type", mcp.Description("账户类型：all/mock/real（默认 all）")),
 		mcp.WithString("fork", mcp.Description("fork 筛选：all/original/fork（默认 all）")),
 		mcp.WithString("currency", mcp.Description("计价货币，默认 USDT")),
+		mcp.WithBoolean("include_groups", mcp.Description("是否返回 per-metric 分布明细（raw_samples/bins/kde，体积大，默认 false）")),
 	), func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		q := url.Values{}
 		setStr(q, "period_unit", req.GetString("period_unit", "week"))
 		setStr(q, "account_type", req.GetString("account_type", "all"))
 		setStr(q, "fork", req.GetString("fork", "all"))
 		setStr(q, "currency", req.GetString("currency", "USDT"))
+		if req.GetBool("include_groups", false) {
+			q.Set("include_groups", "true")
+		}
 		return r.get(ctx, "/api/ops/pm-statistics", q)
 	})
 }
