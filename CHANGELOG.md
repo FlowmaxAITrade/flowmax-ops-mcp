@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/compare/v0.1.1...v0.1.2) (2026-08-31)
+
+
+### Bug Fixes
+
+* trader_stats 默认跳过 groups（加 include_groups 参数）；修正 search_decisions status 枚举 ([9462218](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/commit/94622189f964e11bc09761efc2e8fc7d1f895450))
+
 ## [0.1.1](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/compare/v0.1.0...v0.1.1) (2026-08-27)
 
 
