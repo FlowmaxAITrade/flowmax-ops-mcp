@@ -18,7 +18,7 @@ func TestGetReturnsData(t *testing.T) {
 	defer srv.Close()
 
 	c := NewClient(srv.URL, "test-key")
-	data, err := c.Get(context.Background(), "/api/ops/overview", nil)
+	data, err := c.Get(context.Background(), "/api/v1/reporting/overview", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -35,7 +35,7 @@ func TestGetReturnsErrorOnNonZeroCode(t *testing.T) {
 	defer srv.Close()
 
 	c := NewClient(srv.URL, "test-key")
-	_, err := c.Get(context.Background(), "/api/ops/credits/summary", nil)
+	_, err := c.Get(context.Background(), "/api/v1/reporting/credits/summary", nil)
 	if err == nil {
 		t.Fatal("want error, got nil")
 	}
