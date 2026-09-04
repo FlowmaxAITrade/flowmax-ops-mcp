@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.0](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/compare/v0.1.2...v0.2.0) (2026-09-04)
+
+
+### Features
+
+* 切换到 /api/v1/reporting 路径 + tool 改名 ([f8f7c45](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/commit/f8f7c45de4aa86b44262a5366bc30329c2309719))
+* 切换到 /api/v1/reporting 路径 + tool 改名（list_traders→list_pm_agents、trader_stats→pm_agent_stats） ([3fd0f1d](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/commit/3fd0f1d8824154e0da918317fa2828d513c2d143))
+
 ## [0.1.2](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/compare/v0.1.1...v0.1.2) (2026-08-31)
 
 
