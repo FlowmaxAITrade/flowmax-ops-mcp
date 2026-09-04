@@ -30,7 +30,7 @@ func TestGetReviewPollsUntilReady(t *testing.T) {
 	defer srv.Close()
 
 	r := &registry{client: client.NewClient(srv.URL, "test-key")}
-	result, err := r.getReview(context.Background(), "/api/review/decisions", nil)
+	result, err := r.getReview(context.Background(), "/api/v1/reporting/decisions", nil)
 	if err != nil {
 		t.Fatal(err)
 	}

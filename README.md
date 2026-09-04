@@ -7,6 +7,8 @@ Flowmax 内部「经营驾驶舱 + 复盘」的 MCP Server。让老板/管理员
 
 本服务是 ops-be（`ai-trading-ops-be`）的薄封装，只读、走 HTTP，不直接访问数据库。
 
+> **API 契约变更（待实施）**：ops-be 路径将迁移到 `/api/v1/reporting/*`（替代 `/api/review/*` 与 `/api/ops/*`），tool 改名 `list_traders` → `list_pm_agents`、`trader_stats` → `pm_agent_stats`，分页参数 `size` → `page_size`。权威约定见 ai-trading-ops-be 仓库的 `docs/api-conventions.md`。实施前下方工具列表仍为现状。
+
 ## 工具列表
 
 **复盘决策（`/api/review/*`）**

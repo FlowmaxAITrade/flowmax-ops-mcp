@@ -16,8 +16,8 @@ import (
 // NewServer builds the MCP server and registers all tools. The server exposes
 // two tool families against ops-be read-only endpoints:
 //
-//	decision review  -> /api/review/*
-//	business metrics -> /api/ops/*
+//	decision review  -> /api/v1/reporting/*
+//	business metrics -> /api/v1/reporting/*
 func NewServer(opsBEBaseURL, opsAPIKey string) *server.MCPServer {
 	s := server.NewMCPServer("flowmax-ops-mcp", version.Version)
 	r := &registry{client: client.NewClient(opsBEBaseURL, opsAPIKey)}
@@ -88,7 +88,7 @@ func setInt(q url.Values, key string, value int) {
 }
 
 func registerReviewTools(s *server.MCPServer, r *registry) {
-	s.AddTool(mcp.NewTool("list_traders",
+	s.AddTool(mcp.NewTool("list_pm_agents",
 		mcp.WithDescription("列出所有 PM 交易员目录，含决策次数与最近决策时间。"),
 		mcp.WithString("q", mcp.Description("搜索关键词（名称/邮箱）")),
 		mcp.WithString("exchange", mcp.Description("交易所筛选")),
@@ -104,7 +104,7 @@ func registerReviewTools(s *server.MCPServer, r *registry) {
 		q.Set("is_active", strconv.FormatBool(req.GetBool("is_active", true)))
 		setInt(q, "page", req.GetInt("page", 1))
 		setInt(q, "page_size", req.GetInt("page_size", 20))
-		return r.getReview(ctx, "/api/review/traders", q)
+		return r.getReview(ctx, "/api/v1/reporting/pm-agents", q)
 	})
 
 	s.AddTool(mcp.NewTool("search_decisions",
@@ -123,7 +123,7 @@ func registerReviewTools(s *server.MCPServer, r *registry) {
 		setStr(q, "status", req.GetString("status", ""))
 		setInt(q, "page", req.GetInt("page", 1))
 		setInt(q, "page_size", req.GetInt("page_size", 20))
-		return r.getReview(ctx, "/api/review/decisions", q)
+		return r.getReview(ctx, "/api/v1/reporting/decisions", q)
 	})
 
 	s.AddTool(mcp.NewTool("get_round",
@@ -136,7 +136,7 @@ func registerReviewTools(s *server.MCPServer, r *registry) {
 		if pmID == "" || roundID == "" {
 			return mcp.NewToolResultError("pm_id 和 round_id 必填"), nil
 		}
-		path := "/api/review/traders/" + url.PathEscape(pmID) + "/rounds/" + url.PathEscape(roundID)
+		path := "/api/v1/reporting/pm-agents/" + url.PathEscape(pmID) + "/rounds/" + url.PathEscape(roundID)
 		return r.get(ctx, path, nil)
 	})
 
@@ -157,7 +157,7 @@ func registerReviewTools(s *server.MCPServer, r *registry) {
 		setStr(q, "end", req.GetString("end", ""))
 		setInt(q, "page", req.GetInt("page", 1))
 		setInt(q, "page_size", req.GetInt("page_size", 100))
-		return r.get(ctx, "/api/review/traders/"+url.PathEscape(pmID)+"/orders", q)
+		return r.get(ctx, "/api/v1/reporting/pm-agents/"+url.PathEscape(pmID)+"/orders", q)
 	})
 
 	s.AddTool(mcp.NewTool("list_positions",
@@ -177,7 +177,7 @@ func registerReviewTools(s *server.MCPServer, r *registry) {
 		setStr(q, "end", req.GetString("end", ""))
 		setInt(q, "page", req.GetInt("page", 1))
 		setInt(q, "page_size", req.GetInt("page_size", 100))
-		return r.get(ctx, "/api/review/traders/"+url.PathEscape(pmID)+"/positions", q)
+		return r.get(ctx, "/api/v1/reporting/pm-agents/"+url.PathEscape(pmID)+"/positions", q)
 	})
 
 	s.AddTool(mcp.NewTool("get_equity_curve",
@@ -197,7 +197,7 @@ func registerReviewTools(s *server.MCPServer, r *registry) {
 		setStr(q, "end", req.GetString("end", ""))
 		setInt(q, "page", req.GetInt("page", 1))
 		setInt(q, "page_size", req.GetInt("page_size", 100))
-		return r.get(ctx, "/api/review/traders/"+url.PathEscape(pmID)+"/equity", q)
+		return r.get(ctx, "/api/v1/reporting/pm-agents/"+url.PathEscape(pmID)+"/equity", q)
 	})
 }
 
@@ -205,33 +205,33 @@ func registerOpsTools(s *server.MCPServer, r *registry) {
 	s.AddTool(mcp.NewTool("ops_overview",
 		mcp.WithDescription("平台经营概览：总用户、新增用户、总/活跃 Agent、昨日决策、邀请码使用率、最近用户。"),
 	), func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-		return r.get(ctx, "/api/ops/overview", nil)
+		return r.get(ctx, "/api/v1/reporting/overview", nil)
 	})
 
 	s.AddTool(mcp.NewTool("list_users",
 		mcp.WithDescription("用户列表（搜索 + 分页）。"),
 		mcp.WithString("q", mcp.Description("搜索关键词")),
 		mcp.WithNumber("page", mcp.Description("页码，默认 1")),
-		mcp.WithNumber("size", mcp.Description("每页条数，默认 20")),
+		mcp.WithNumber("page_size", mcp.Description("每页条数，默认 20")),
 	), func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		q := url.Values{}
 		setStr(q, "q", req.GetString("q", ""))
 		setInt(q, "page", req.GetInt("page", 1))
-		setInt(q, "size", req.GetInt("size", 20))
-		return r.get(ctx, "/api/ops/users", q)
+		setInt(q, "page_size", req.GetInt("page_size", 20))
+		return r.get(ctx, "/api/v1/reporting/users", q)
 	})
 
 	s.AddTool(mcp.NewTool("list_invite_codes",
 		mcp.WithDescription("邀请码列表（状态筛选 + 分页）。"),
 		mcp.WithString("status", mcp.Description("状态筛选：used/unused/expired")),
 		mcp.WithNumber("page", mcp.Description("页码，默认 1")),
-		mcp.WithNumber("size", mcp.Description("每页条数，默认 20")),
+		mcp.WithNumber("page_size", mcp.Description("每页条数，默认 20")),
 	), func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		q := url.Values{}
 		setStr(q, "status", req.GetString("status", ""))
 		setInt(q, "page", req.GetInt("page", 1))
-		setInt(q, "size", req.GetInt("size", 20))
-		return r.get(ctx, "/api/ops/invite-codes", q)
+		setInt(q, "page_size", req.GetInt("page_size", 20))
+		return r.get(ctx, "/api/v1/reporting/invite-codes", q)
 	})
 
 	s.AddTool(mcp.NewTool("credit_summary",
@@ -242,10 +242,10 @@ func registerOpsTools(s *server.MCPServer, r *registry) {
 		q := url.Values{}
 		setStr(q, "start", req.GetString("start", ""))
 		setStr(q, "end", req.GetString("end", ""))
-		return r.get(ctx, "/api/ops/credits/summary", q)
+		return r.get(ctx, "/api/v1/reporting/credits/summary", q)
 	})
 
-	s.AddTool(mcp.NewTool("trader_stats",
+	s.AddTool(mcp.NewTool("pm_agent_stats",
 		mcp.WithDescription("交易员绩效统计：净盈亏/收益率/胜率分布与排行榜。"),
 		mcp.WithString("period_unit", mcp.Description("周期单位：day/week/month（默认 week）")),
 		mcp.WithString("account_type", mcp.Description("账户类型：all/mock/real（默认 all）")),
@@ -261,6 +261,6 @@ func registerOpsTools(s *server.MCPServer, r *registry) {
 		if req.GetBool("include_groups", false) {
 			q.Set("include_groups", "true")
 		}
-		return r.get(ctx, "/api/ops/pm-statistics", q)
+		return r.get(ctx, "/api/v1/reporting/pm-statistics", q)
 	})
 }
