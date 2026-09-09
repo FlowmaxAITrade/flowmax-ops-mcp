@@ -247,7 +247,8 @@ func registerOpsTools(s *server.MCPServer, r *registry) {
 
 	s.AddTool(mcp.NewTool("pm_agent_stats",
 		mcp.WithDescription("交易员绩效统计：净盈亏/收益率/胜率分布与排行榜。"),
-		mcp.WithString("period_unit", mcp.Description("周期单位：day/week/month（默认 week）")),
+		mcp.WithString("period_unit", mcp.Description("周期单位：day/week/month（默认 week，即本周·周一至今）；查历史周用 period_start 传该周周一日期")),
+		mcp.WithString("period_start", mcp.Description("周期起始日期（YYYY-MM-DD，须为周一，如 2026-08-31 即上周）；留空则按 period_unit 取当前周期")),
 		mcp.WithString("account_type", mcp.Description("账户类型：all/mock/real（默认 all）")),
 		mcp.WithString("fork", mcp.Description("fork 筛选：all/original/fork（默认 all）")),
 		mcp.WithString("currency", mcp.Description("计价货币，默认 USDT")),
@@ -255,6 +256,7 @@ func registerOpsTools(s *server.MCPServer, r *registry) {
 	), func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		q := url.Values{}
 		setStr(q, "period_unit", req.GetString("period_unit", "week"))
+		setStr(q, "period_start", req.GetString("period_start", ""))
 		setStr(q, "account_type", req.GetString("account_type", "all"))
 		setStr(q, "fork", req.GetString("fork", "all"))
 		setStr(q, "currency", req.GetString("currency", "USDT"))
