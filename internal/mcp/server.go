@@ -246,7 +246,7 @@ func registerOpsTools(s *server.MCPServer, r *registry) {
 	})
 
 	s.AddTool(mcp.NewTool("pm_agent_stats",
-		mcp.WithDescription("交易员绩效统计：净盈亏/收益率/胜率分布与排行榜。"),
+		mcp.WithDescription("交易员绩效统计：净盈亏/收益率/胜率/交易额(trading_volume)/手续费(total_fee)/最大回撤额(max_drawdown)/最大回撤率(max_drawdown_pct) 分布与排行榜。"),
 		mcp.WithString("period_unit", mcp.Description("周期单位：day/week/month（默认 week，即本周·周一至今）；查历史周用 period_start 传该周周一日期")),
 		mcp.WithString("period_start", mcp.Description("周期起始日期（YYYY-MM-DD，须为周一，如 2026-08-31 即上周）；留空则按 period_unit 取当前周期")),
 		mcp.WithString("account_type", mcp.Description("账户类型：all/mock/real（默认 all）")),
