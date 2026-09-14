@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/compare/v0.3.0...v0.4.0) (2026-09-14)
+
+
+### Features
+
+* pm_agent_stats 工具描述补充交易额/手续费/回撤指标 ([11a1791](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/commit/11a17919297c14c7e951726ab82b3f763f97b1f0))
+
 ## [0.2.0](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/compare/v0.1.2...v0.2.0) (2026-09-04)
 
 
