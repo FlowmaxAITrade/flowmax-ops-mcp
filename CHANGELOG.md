@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/compare/v0.4.0...v0.5.0) (2026-09-15)
+
+
+### Features
+
+* 改用 X-Api-Key 头传递 operator key ([795d099](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/commit/795d09969be7a350ec7851c889abedeebbf92569))
+
 ## [0.4.0](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/compare/v0.3.0...v0.4.0) (2026-09-14)
 
 
