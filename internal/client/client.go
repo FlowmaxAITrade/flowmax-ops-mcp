@@ -48,7 +48,7 @@ func (c *Client) Get(ctx context.Context, path string, query url.Values) (json.R
 		return nil, err
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("X-Ops-Key", c.apiKey)
+	req.Header.Set("X-Api-Key", c.apiKey)
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {

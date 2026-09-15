@@ -4,7 +4,7 @@
       "command": "flowmax-ops-mcp",
       "env": {
         "OPS_BE_BASE_URL": "https://<ops-be-host>",
-        "OPS_API_KEY": "<your-read-only-key>"
+        "OPS_API_KEY": "<your fmx_* operator key>"
       }
     }
   }

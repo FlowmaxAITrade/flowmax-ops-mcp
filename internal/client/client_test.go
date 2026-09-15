@@ -9,8 +9,8 @@ import (
 
 func TestGetReturnsData(t *testing.T) {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if got := r.Header.Get("X-Ops-Key"); got != "test-key" {
-			t.Fatalf("X-Ops-Key = %q, want test-key", got)
+		if got := r.Header.Get("X-Api-Key"); got != "test-key" {
+			t.Fatalf("X-Api-Key = %q, want test-key", got)
 		}
 		w.Header().Set("Content-Type", "application/json")
 		_, _ = w.Write([]byte(`{"code":0,"message":"ok","data":{"total_users":42}}`))

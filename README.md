@@ -39,7 +39,7 @@ Flowmax 内部「经营驾驶舱 + 复盘」的 MCP Server。让老板/管理员
 | 变量 | 说明 |
 |---|---|
 | `OPS_BE_BASE_URL` | ops-be 服务地址，如 `https://<ops-be-host>` |
-| `OPS_API_KEY` | ops-be 的只读 key（对应服务端 `OPS_API_KEY`，经 `X-Ops-Key` 头传递） |
+| `OPS_API_KEY` | 界面生成的 operator key（`fmx_*` 开头，经 `X-Api-Key` 头传递） |
 
 > 两个变量缺一不可，缺失时启动即报错。
 
