@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.7.0](https://github.com/FlowmaxAITrade/timon-mcp/compare/v0.6.0...v0.7.0) (2026-09-18)
+
+### Miscellaneous Chores
+
+* rename flowmax-ops-mcp to timon-mcp (Timon rebrand) ([50c9906](https://github.com/FlowmaxAITrade/timon-mcp/commit/50c99068ea47fd440159b3aa536e251826afb1c8))
+
 ## [0.6.0](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/compare/v0.5.0...v0.6.0) (2026-09-18)
 
 
