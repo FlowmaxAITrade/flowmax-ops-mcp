@@ -203,7 +203,7 @@ func registerReviewTools(s *server.MCPServer, r *registry) {
 
 func registerOpsTools(s *server.MCPServer, r *registry) {
 	s.AddTool(mcp.NewTool("ops_overview",
-		mcp.WithDescription("平台经营概览：总用户、新增用户、总/活跃 Agent、昨日决策、邀请码使用率、最近用户。"),
+		mcp.WithDescription("平台经营概览：总/新增用户、总/活跃 Agent、昨日决策、邀请码使用率、最近用户、近 7 天活跃用户/Agent/交易额(USDT)、创建 Agent 用户与转化率、最近 30 天注册。"),
 	), func(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		return r.get(ctx, "/api/v1/reporting/overview", nil)
 	})

@@ -26,7 +26,7 @@ Flowmax 内部「经营驾驶舱 + 复盘」的 MCP Server。让老板/管理员
 
 | tool | 说明 |
 |---|---|
-| `ops_overview` | 总用户/新增用户/总与活跃 Agent/昨日决策/邀请码使用率 |
+| `ops_overview` | 总/新增用户、总与活跃 Agent、昨日决策、邀请码使用率、近 7 天活跃用户/Agent/交易额、创建 Agent 用户与转化率、最近 30 天注册 |
 | `list_users` | 用户列表 |
 | `list_invite_codes` | 邀请码列表 |
 | `credit_summary` | Credit 按类型汇总（recharge/deduction/bonus/grant/expiry） |
