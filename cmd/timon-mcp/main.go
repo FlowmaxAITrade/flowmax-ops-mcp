@@ -5,9 +5,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/FlowmaxAITrade/flowmax-ops-mcp/internal/config"
-	mcpserver "github.com/FlowmaxAITrade/flowmax-ops-mcp/internal/mcp"
-	"github.com/FlowmaxAITrade/flowmax-ops-mcp/internal/version"
+	"github.com/FlowmaxAITrade/timon-mcp/internal/config"
+	mcpserver "github.com/FlowmaxAITrade/timon-mcp/internal/mcp"
+	"github.com/FlowmaxAITrade/timon-mcp/internal/version"
 	"github.com/mark3labs/mcp-go/server"
 )
 

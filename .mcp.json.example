@@ -1,7 +1,7 @@
 {
   "mcpServers": {
-    "flowmax-ops": {
-      "command": "flowmax-ops-mcp",
+    "timon": {
+      "command": "timon-mcp",
       "env": {
         "OPS_BE_BASE_URL": "https://<ops-be-host>",
         "OPS_API_KEY": "<your fmx_* operator key>"

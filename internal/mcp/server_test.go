@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/FlowmaxAITrade/flowmax-ops-mcp/internal/client"
+	"github.com/FlowmaxAITrade/timon-mcp/internal/client"
 )
 
 func TestGetReviewPollsUntilReady(t *testing.T) {

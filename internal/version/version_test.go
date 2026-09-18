@@ -7,8 +7,8 @@ import (
 
 func TestStringContainsIdentity(t *testing.T) {
 	s := String()
-	if !strings.Contains(s, "flowmax-ops-mcp") {
-		t.Fatalf("String() = %q, want to contain flowmax-ops-mcp", s)
+	if !strings.Contains(s, "timon-mcp") {
+		t.Fatalf("String() = %q, want to contain timon-mcp", s)
 	}
 }
 

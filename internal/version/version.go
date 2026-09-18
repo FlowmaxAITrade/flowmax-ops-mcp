@@ -19,7 +19,7 @@ var (
 
 // String returns a human-readable build identity, e.g.
 //
-//	flowmax-ops-mcp 0.1.0 (commit=abc1234, built=2026-08-27T10:00:00Z)
+//	timon-mcp 0.1.0 (commit=abc1234, built=2026-08-27T10:00:00Z)
 //
 // For non-release builds (no ldflags), Version falls back to the module
 // version and Commit to the embedded VCS revision when available.
@@ -45,7 +45,7 @@ func String() string {
 		commit = "unknown"
 	}
 	if BuildDate != "" {
-		return fmt.Sprintf("flowmax-ops-mcp %s (commit=%s, built=%s)", v, commit, BuildDate)
+		return fmt.Sprintf("timon-mcp %s (commit=%s, built=%s)", v, commit, BuildDate)
 	}
-	return fmt.Sprintf("flowmax-ops-mcp %s (commit=%s)", v, commit)
+	return fmt.Sprintf("timon-mcp %s (commit=%s)", v, commit)
 }

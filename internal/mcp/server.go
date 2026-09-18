@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/FlowmaxAITrade/flowmax-ops-mcp/internal/client"
-	"github.com/FlowmaxAITrade/flowmax-ops-mcp/internal/version"
+	"github.com/FlowmaxAITrade/timon-mcp/internal/client"
+	"github.com/FlowmaxAITrade/timon-mcp/internal/version"
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 )
@@ -19,7 +19,7 @@ import (
 //	decision review  -> /api/v1/reporting/*
 //	business metrics -> /api/v1/reporting/*
 func NewServer(opsBEBaseURL, opsAPIKey string) *server.MCPServer {
-	s := server.NewMCPServer("flowmax-ops-mcp", version.Version)
+	s := server.NewMCPServer("timon-mcp", version.Version)
 	r := &registry{client: client.NewClient(opsBEBaseURL, opsAPIKey)}
 	registerReviewTools(s, r)
 	registerOpsTools(s, r)

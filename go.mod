@@ -1,4 +1,4 @@
-module github.com/FlowmaxAITrade/flowmax-ops-mcp
+module github.com/FlowmaxAITrade/timon-mcp
 
 go 1.25.5
 
