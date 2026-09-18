@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/compare/v0.5.0...v0.6.0) (2026-09-18)
+
+
+### Features
+
+* ops_overview 补充近 7 天活跃与转化率指标描述 ([6da5946](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/commit/6da5946174f390bf9828d3e777f7038aeb969a66))
+
 ## [0.5.0](https://github.com/FlowmaxAITrade/flowmax-ops-mcp/compare/v0.4.0...v0.5.0) (2026-09-15)
 
 
